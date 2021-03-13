@@ -1,0 +1,14 @@
+.title {
+  text-align: center;
+}
+
+.item {
+  box-shadow: 0 0 10px rebeccapurple;
+  padding: 5px 20px 5px 20px;
+  margin-top: 20px;
+}
+
+.list {
+  list-style: none;
+  padding: 0 20px 0px 20px;
+}

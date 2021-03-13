@@ -1,0 +1,72 @@
+.button {
+  /* border-radius: 10px; */
+  width: 120px;
+  height: 50px;
+  border: none;
+  display: block;
+  background-color: rebeccapurple;
+  color: white;
+  font-size: 18px;
+  outline: none;
+  transition: background-color 0.5s linear;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: royalblue;
+  /* transform: scale(1.2); */
+}
+
+.img {
+  display: block;
+  margin: 0 50px 0 200px;
+}
+
+.container {
+  display: flex;
+  margin: 30px 0 0 0;
+}
+
+.section {
+  width: 600px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+/* .wraper {
+  background-image: url(https://cdn.pixabay.com/photo/2020/02/27/18/54/popcorn-4885565_960_720.jpg);
+  background-size: cover;
+} */
+
+.text {
+  color: black;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.titleText {
+  composes: text;
+  display: block;
+  margin-left: 200px;
+}
+
+.li {
+  composes: text;
+  font-size: 20px;
+  font-weight: bold;
+  color: rebeccapurple;
+}
+
+.genres {
+  composes: list;
+  margin-left: 200px;
+}
+
+.active {
+  color: white;
+  background-color: rebeccapurple;
+}

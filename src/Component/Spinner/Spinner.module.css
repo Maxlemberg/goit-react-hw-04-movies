@@ -1,0 +1,64 @@
+.loader {
+  display: block;
+  margin: 50px auto;
+  width: 100px;
+  height: 100px;
+  position: relative;
+  transform-origin: (100px + 26px)/2 (100px + 26px)/2;
+  animation: spin 1s infinite linear;
+}
+.spinner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-width: 0px 0px 26px 26px;
+  border-style: solid;
+  border-color: transparent;
+}
+.yellow {
+  composes: spinner;
+  border-left-color: #ffff99;
+}
+.orange {
+  composes: spinner;
+  border-left-color: #ffcc66;
+  transform: rotate(-45deg);
+}
+.red {
+  composes: spinner;
+  border-left-color: #ff9966;
+  transform: rotate(-90deg);
+}
+.pink {
+  composes: spinner;
+  border-left-color: #ff6699;
+  transform: rotate(-135deg);
+}
+.violet {
+  composes: spinner;
+  border-left-color: #cc66cc;
+  transform: rotate(-180deg);
+}
+.mauve {
+  composes: spinner;
+  border-left-color: #cc99cc;
+  transform: rotate(-225deg);
+}
+.lightYellow {
+  composes: spinner;
+  border-left-color: #fffad5;
+  transform: rotate(-270deg);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
