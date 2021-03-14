@@ -12,7 +12,6 @@ const apiMovies = async () => {
 const apiSearch = async movieName => {
   try {
     const response = await axios.get(`/search/movie?&query=${movieName}`);
-    //console.log(response);
     return response.data.results;
   } catch (error) {
     console.log(error);
@@ -21,6 +20,7 @@ const apiSearch = async movieName => {
 
 const apiMovieDetails = async id => {
   const response = await axios.get(`/movie/${id}`);
+  //console.log(response);
   return response.data;
 };
 

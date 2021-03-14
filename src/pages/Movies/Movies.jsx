@@ -10,6 +10,13 @@ class Movies extends Component {
     value: '',
     isLoading: false,
   };
+
+  // componentDidUpdate() {
+  //   if (this.state.searchArr.length > 0) {
+  //     this.props.history.push(this.state.value);
+  //   }
+  // }
+
   onInput = e => {
     this.setState({ value: e.target.value });
   };
@@ -22,7 +29,7 @@ class Movies extends Component {
     } catch (error) {
       console.log(error);
     } finally {
-      setTimeout(() => this.setState({ isLoading: false }), 1000);
+      setTimeout(() => this.setState({ isLoading: false }), 500);
       this.resetValue();
     }
   };
@@ -52,13 +59,9 @@ class Movies extends Component {
         </form>
         {this.state.isLoading && <Spinner />}
         {this.state.searchArr && !this.state.isLoading && (
-          <ul className={styles.list}>
-            <MoviesList
-              moviesArr={this.state.searchArr}
-              url={this.props.match.url}
-            />
-          </ul>
+          <MoviesList moviesArr={this.state.searchArr} />
         )}
+        {/* <Route path={`${this.props.match.path}/:searchName`}></Route> */}
       </>
     );
   }

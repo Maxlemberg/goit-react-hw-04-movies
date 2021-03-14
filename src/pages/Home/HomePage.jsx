@@ -7,17 +7,17 @@ import style from './HomePage.module.css';
 class Home extends Component {
   state = {
     movies: [],
-    spinner: false,
+    isLoader: false,
   };
 
   async componentDidMount() {
     try {
       const movies = await apiMovies();
-      this.setState({ movies: movies, spinner: true });
+      this.setState({ movies: movies, isLoader: true });
     } catch (error) {
       console.log(error);
     } finally {
-      this.setState({ spinner: false });
+      setTimeout(() => this.setState({ isLoader: false }), 500);
     }
   }
 
@@ -25,15 +25,10 @@ class Home extends Component {
     return (
       <>
         <h1 className={style.title}>Головна</h1>
-        {this.state.spinner ? (
+        {this.state.isLoader ? (
           <Spinner />
         ) : (
-          <ul className={style.list}>
-            <MoviesList
-              moviesArr={this.state.movies}
-              url={this.props.match.url}
-            />
-          </ul>
+          <MoviesList moviesArr={this.state.movies} />
         )}
       </>
     );

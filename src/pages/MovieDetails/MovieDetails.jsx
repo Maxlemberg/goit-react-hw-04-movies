@@ -5,6 +5,7 @@ import Cast from '../../Component/Cast/Cast';
 import Reviews from '../../Component/Reviews/Reviews';
 import Spinner from '../../Component/Spinner';
 import style from './MovieDetails.module.css';
+import routes from '../../routes';
 
 class MovieDetails extends Component {
   state = {
@@ -15,40 +16,53 @@ class MovieDetails extends Component {
 
   async componentDidMount() {
     try {
+      this.setState({ isLoading: true });
       const { movieId } = this.props.match.params;
       const details = await apiMovieDetails(movieId);
       this.setState({
         movie: details,
         genres: details.genres,
-        isLoading: true,
       });
     } catch (error) {
       console.log(error);
     } finally {
-      setTimeout(() => this.setState({ isLoading: false }), 2000);
+      setTimeout(() => this.setState({ isLoading: false }), 500);
     }
   }
   genresList = data => {
     const genresArr = data.map(genre => {
       return (
         <li className={style.text} key={genre.id}>
+          <span role="img" aria-label="face emoji">
+            💯
+          </span>
           {genre.name}
         </li>
       );
     });
     return genresArr;
   };
+
+  handleGoBack = () => {
+    const { location, history } = this.props;
+    history.push(location.state?.from?.pathname || routes.home);
+  };
+
   render() {
     const { poster_path, title, vote_average, overview } = this.state.movie;
-
     const UrlImg = `https://image.tmdb.org/t/p/w200${poster_path}`;
     const genreData = this.genresList(this.state.genres);
+
     return this.state.isLoading ? (
       <Spinner />
     ) : (
       <>
         <div className={style.wraper}>
-          <button className={style.button} type="button">
+          <button
+            className={style.button}
+            type="button"
+            onClick={this.handleGoBack}
+          >
             Go back
           </button>
           <div className={style.container}>
@@ -69,7 +83,9 @@ class MovieDetails extends Component {
                 <NavLink
                   className={style.li}
                   activeClassName={style.active}
-                  to={`${this.props.match.url}/credits`}
+                  to={{
+                    pathname: `${this.props.match.url}/credits`,
+                  }}
                 >
                   Cast
                 </NavLink>
@@ -78,7 +94,9 @@ class MovieDetails extends Component {
                 <NavLink
                   className={style.li}
                   activeClassName={style.active}
-                  to={`${this.props.match.url}/reviews`}
+                  to={{
+                    pathname: `${this.props.match.url}/reviews`,
+                  }}
                 >
                   Reviews
                 </NavLink>

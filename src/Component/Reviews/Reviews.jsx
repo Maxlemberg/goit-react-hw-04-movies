@@ -10,16 +10,16 @@ class Reviews extends Component {
   };
   async componentDidMount() {
     try {
+      this.setState({ isLoading: true });
       const { movieId } = this.props.match.params;
       const response = await apiReviews(movieId);
       this.setState({
         items: [...response],
-        isLoading: true,
       });
     } catch (error) {
       console.log(error);
     } finally {
-      this.setState({ isLoading: false });
+      setTimeout(() => this.setState({ isLoading: false }), 500);
     }
   }
 
@@ -33,15 +33,21 @@ class Reviews extends Component {
       );
     });
 
-    return this.state.items.length > 0 ? (
-      <ul className={style.list}>{listItem}</ul>
+    let list;
+    if (this.state.items.length > 0) {
+      list = [...listItem];
+    } else {
+      list = (
+        <li>
+          <h2 className={style.title}>Whoops Error</h2>
+        </li>
+      );
+    }
+    return this.state.isLoading ? (
+      <Spinner />
     ) : (
-      <h1 className={style.title}> Whoops Error</h1>
+      <ul className={style.list}>{list}</ul>
     );
-
-    // this.state.isLoading && (
-    //   <Spinner />
-    // );
   }
 }
 
