@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import style from './List.module.css';
 
-const MoviesList = ({ moviesArr = [], location }) => {
+const MoviesList = ({ moviesArr = [], location, value }) => {
   const arr = moviesArr.map(movie => (
     <li className={style.item} key={movie.id}>
       <NavLink
@@ -11,6 +11,7 @@ const MoviesList = ({ moviesArr = [], location }) => {
           pathname: `movies/${movie.id}`,
           state: {
             from: location,
+            value,
           },
         }}
       >

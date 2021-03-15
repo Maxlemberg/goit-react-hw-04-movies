@@ -11,6 +11,24 @@ class Movies extends Component {
     isLoading: false,
   };
 
+  async componentDidMount() {
+    if (this.props.location.value) {
+      try {
+        const data = await apiSearch(this.props.location.value);
+        this.setState({
+          searchArr: data,
+          isLoading: true,
+          value: this.props.location.value,
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setTimeout(() => this.setState({ isLoading: false }), 500);
+        // this.resetValue();
+      }
+    }
+  }
+
   // componentDidUpdate() {
   //   if (this.state.searchArr.length > 0) {
   //     this.props.history.push(this.state.value);
@@ -26,11 +44,15 @@ class Movies extends Component {
     try {
       const data = await apiSearch(this.state.value);
       this.setState({ searchArr: data, isLoading: true });
+      this.props.history.push({
+        pathname: this.props.match.url,
+        search: `query=${this.state.value}`,
+      });
     } catch (error) {
       console.log(error);
     } finally {
       setTimeout(() => this.setState({ isLoading: false }), 500);
-      this.resetValue();
+      // this.resetValue();
     }
   };
 
@@ -59,7 +81,10 @@ class Movies extends Component {
         </form>
         {this.state.isLoading && <Spinner />}
         {this.state.searchArr && !this.state.isLoading && (
-          <MoviesList moviesArr={this.state.searchArr} />
+          <MoviesList
+            moviesArr={this.state.searchArr}
+            value={this.state.value}
+          />
         )}
         {/* <Route path={`${this.props.match.path}/:searchName`}></Route> */}
       </>

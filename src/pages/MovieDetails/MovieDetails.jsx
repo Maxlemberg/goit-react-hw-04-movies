@@ -5,13 +5,14 @@ import Cast from '../../Component/Cast/Cast';
 import Reviews from '../../Component/Reviews/Reviews';
 import Spinner from '../../Component/Spinner';
 import style from './MovieDetails.module.css';
-import routes from '../../routes';
 
 class MovieDetails extends Component {
   state = {
     movie: {},
     genres: [],
     isLoading: false,
+    from: '',
+    value: '',
   };
 
   async componentDidMount() {
@@ -22,13 +23,18 @@ class MovieDetails extends Component {
       this.setState({
         movie: details,
         genres: details.genres,
+        from: this.props.location.state?.from?.pathname,
+        value: this.props.location.state?.value,
       });
     } catch (error) {
-      console.log(error);
+      if (error.response.status.toString() === '404') {
+        this.props.history.push('/');
+      }
     } finally {
       setTimeout(() => this.setState({ isLoading: false }), 500);
     }
   }
+
   genresList = data => {
     const genresArr = data.map(genre => {
       return (
@@ -44,8 +50,16 @@ class MovieDetails extends Component {
   };
 
   handleGoBack = () => {
-    const { location, history } = this.props;
-    history.push(location.state?.from?.pathname || routes.home);
+    const { history } = this.props;
+    if (this.state.value) {
+      history.push({
+        pathname: this.state.from,
+        search: `query=${this.state.value}`,
+        value: this.state.value,
+      });
+    } else {
+      history.push('/');
+    }
   };
 
   render() {
